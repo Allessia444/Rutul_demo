@@ -37,7 +37,7 @@
 							<div class="col-md-8 col-sm-12">
 								<div class="blog-detail mb-30">
 									<div class="blog-img">
-										<img src="/images/img2.jpg" alt="">
+										<img src="{!! $blog->photo_url('large') !!}" alt="">
 									</div>
 									<div class="blog-caption">
 										<h4 class="mb-10">{!! $blog->name !!}</h4>

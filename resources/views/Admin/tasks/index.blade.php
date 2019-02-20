@@ -7,20 +7,20 @@
 				<div class="row">
 					<div class="col-md-6 col-sm-12">
 						<div class="title">
-							<h4>Projects</h4>
+							<h4>Tasks</h4>
 						</div>
 						<nav aria-label="breadcrumb" role="navigation">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="{{Route('home')}}">Home</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Project</li>
+								<li class="breadcrumb-item active" aria-current="page">Task</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="col-md-6 col-sm-12 text-right">
 						<div class="dropdown">
-							<a class="btn btn-primary " href="{{ route('projects.create')}}" role="button" >
+							<a class="btn btn-primary " href="{{ route('tasks.create')}}" role="button" >
 								<i class="fa fa-plus"></i>
-								Add Project
+								Add Task
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								<a class="dropdown-item" href="#">Export List</a>
@@ -36,29 +36,35 @@
 					<table class="data-table stripe hover nowrap">
 						<thead>
 							<tr>
-								<th>Project Id</th>
+								<th>Task Id</th>
 								<th>Name</th>
-								<th>User Name</th>
-								<th>Confirm Hour</th>
+								<th>Task Category</th>
+								<th>Start Date</th>
+								<th>End Date</th>
 								<th class="datatable-nosort">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($projects as $project)
+							@foreach($tasks as $task)
 							<tr>
-								<td>{{ $project->id }}</td>
-								<td>{{ $project->user->fname }}</td>
-								<td>{{ $project->name}}</td>
-								<td>{{ $project->confirm_hours}}</td>
+								<td>{{ $task->id }}</td>
+								<td>{{ $task->name }}</td>
+								<td>{{ $task->task_category->name }}</td>
+								<td>{{ $task->start_date }}</td>
+								<td>{{ $task->end_date }}</td>
 								<td>
 									<div class="dropdown">
 										<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 											<i class="fa fa-ellipsis-h"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="{{ route('projects.show', $project->id) }}"><i class="fa fa-eye"></i> View</a>
-											<a class="dropdown-item" href="/admin/projects/{{$project->id}}/edit"><i class="fa fa-pencil"></i> Edit</a>
-											<a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+											<a class="dropdown-item" href="{{ route('tasks.show', $task->id) }}"><i class="fa fa-eye"></i> View</a>
+											<a class="dropdown-item" href="/admin/tasks/{{$task->id}}/edit"><i class="fa fa-pencil"></i> Edit</a>
+											<form action="{{route('tasks.destroy',$task->id)}}" method="POST">
+												@method('DELETE')
+												@csrf
+												<button class="dropdown-item" type="submit"><i class="fa fa-trash"></i>Delete</button> 
+											</form>
 										</div>
 									</div>
 								</td>

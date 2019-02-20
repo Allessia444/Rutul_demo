@@ -8,7 +8,7 @@
 
 			<div class="page-header">
 				<div class="row">
-					<div class="col-md-6 col-sm-12 text-right">
+					<div class="col-md-12 col-sm-12 text-right">
 						<div class="dropdown">
 							<a class="btn btn-primary " href="{{ route('blogs.create')}}" role="button" >
 								<i class="fa fa-plus"></i>
@@ -35,7 +35,7 @@
 								<div class="contact-dire-info text-center">
 									<div class="contact-avatar">
 										<span>
-											<img src="{!! $blog->photo !!}" alt="">
+											<img src="{!! $blog->photo_url('front') !!}" alt="">
 										</span>
 									</div>
 									<div class="contact-name">
@@ -56,9 +56,13 @@
 								<div class="view-contact">
 									<a href="{{ route('blogs.show', $blog->id) }}">Blog Details</a>
 								</div>
+
 								<div class="view-contact">
 									<a href="/admin/blogs/{{$blog->id}}/edit">Edit Blog</a>
 								</div>
+
+							
+
 							</div>
 						</li>
 						

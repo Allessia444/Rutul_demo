@@ -41,7 +41,7 @@
 											<div class="row no-gutters">
 												<div class="col-lg-4 col-md-12 col-sm-12">
 													<div class="blog-img">
-														<img src="vendors/images/img2.jpg" alt="" class="bg_img">
+														<img src="{!! $blog->photo_url('front') !!}" alt="" >
 													</div>
 												</div>
 												<div class="col-lg-8 col-md-12 col-sm-12">

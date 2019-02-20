@@ -43,6 +43,7 @@
 								<th>Name</th>
 								<th>Blog Category</th>
 								<th>Description</th>
+								<th>User Name</th>
 								<th class="datatable-nosort">Action</th>
 							</tr>
 						</thead>
@@ -54,6 +55,7 @@
 								<td>{{ $blog->name}}</td>
 								<td>{{ $blog->blog_category->name }}</td>
 								<td>{{ $blog->description }}</td>
+								<td>{{ $blog->user->fname }}</td>
 								<td>
 									<div class="dropdown">
 										<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -94,6 +96,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
+			 pageLength: 5,
 			columnDefs: [{
 				targets: "datatable-nosort",
 				orderable: false,

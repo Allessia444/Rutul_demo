@@ -28,4 +28,9 @@ class TaskCategory extends Model
             ]
         ];
     }
+
+    public function task()
+    {
+        return $this->hasMany('App\Task');
+    }
 }

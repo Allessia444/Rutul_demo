@@ -31,6 +31,9 @@ Route::group(['middleware'=>['role'],'prefix'=>'admin','namespace'=>'Admin'], fu
 	//inser update delete view task_category
 	Route::resource('task_categories','TaskCategoriesController');
 
+	//inser update delete view task_category
+	Route::resource('tasks','TasksController');
+
 	//insert update delete view project
 	Route::resource('projects','ProjectsController');
 

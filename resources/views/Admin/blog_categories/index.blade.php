@@ -77,6 +77,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
+			 pageLength: 5,
 			columnDefs: [{
 				targets: "datatable-nosort",
 				orderable: false,

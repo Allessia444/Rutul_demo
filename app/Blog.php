@@ -46,7 +46,7 @@ class Blog extends Model
 	public function photo_url($type='original') 
 	{
 		if (!empty($this->photo))
-			return upload_url($this->photo,'photo',$type);
+			return upload_url($this->photo,'blog',$type);
 		elseif (!empty($this->photo) && file_exists(tmp_path($this->photo)))
 			return tmp_url($this->$photo);
 		else
