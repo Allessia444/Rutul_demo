@@ -63,7 +63,7 @@
 
 				<div id="container">
 					<div id="previewDiv"></div>
-					<input type="hidden" name="blog" id="file">
+					<input type="hidden" name="photo" id="file">
 					<a id="pickfiles" href="javascript:;">[Select files]</a> 
 					<a id="uploadfiles" href="javascript:;">[Upload files]</a>
 					<ul id="filelist"></ul>

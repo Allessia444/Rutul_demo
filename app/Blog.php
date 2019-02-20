@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Image;
 
 class Blog extends Model
 {
@@ -22,10 +23,10 @@ class Blog extends Model
 
     public function setphotoAttribute($file) {
 		$source_path = upload_tmp_path($file);
-		//dd($source_path);
+		// dd($source_path);
 		if ($file && file_exists($source_path)) 
 		{
-			upload_move($file,'blog');
+			upload_move($file,'/blog');
 
 			Image::make($source_path)->resize(200,303)->save($source_path);
 			upload_move($file,'blog','front');
