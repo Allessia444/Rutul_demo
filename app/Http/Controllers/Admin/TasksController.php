@@ -20,7 +20,7 @@ class TasksController extends Controller
     public function index()
     {
 
-       $tasks = Task::where('user_id','=',Auth::user()->id)->get();
+       $tasks = Task::where('user_id','=',Auth::user()->id)->where('complete','=',0)->get();
        return view('admin.tasks.index',compact('tasks'));
     }
 
@@ -36,6 +36,17 @@ class TasksController extends Controller
        return view('admin.tasks.create',compact('user','task_category'));
     }
 
+    //Task completed
+    public function complete(Request $request)
+    {
+
+          $task = Task::find($request->get('id'));
+          $task->complete=1;
+          $task->save();
+          return redirect()->route('tasks.index');
+
+    }
+
     /**
      * Store a newly created task in storage.
      *
@@ -48,8 +59,8 @@ class TasksController extends Controller
         $rules=[
           'name' => 'required',
           'notes'=>'required',
-          'start_date'=>'required|date|before:end_date',
-          'end_date'=>'required|date|after:start_date',
+          'start_date'=>'required',
+          'end_date'=>'required|after:start_date',
 
       ];
         // Messages for validation
@@ -68,9 +79,8 @@ class TasksController extends Controller
           return redirect()->back()->withErrors($validator)->withInput();
       }
        //  If no error than go inside otherwise go to the catch section
-      try
-      {
-
+      // try
+      // {
           $task = new Task();
           $task->name=$request->get('name');
           $task->notes=$request->get('notes');
@@ -81,11 +91,11 @@ class TasksController extends Controller
           $task->save();
           return redirect()->route('tasks.index');
 
-      }
-      catch(\Exception $e)
-      {
-          return redirect()->route('tasks.index')->withError('Something went wrong, Please try after sometime.');
-      }
+      // }
+      // catch(\Exception $e)
+      // {
+      //     return redirect()->route('tasks.index')->withError('Something went wrong, Please try after sometime.');
+      // }
   }
 
     /**

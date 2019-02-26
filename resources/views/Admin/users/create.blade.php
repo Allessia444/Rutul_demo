@@ -126,7 +126,7 @@
 				<div class="form-group row">
 					<label class="col-sm-12 col-md-2 col-form-label">Team Lead</label>
 					<div class="col-sm-12 col-md-10">
-						<input  type="radio" name="team_lead" checked="" value="0">yes
+						<input  type="radio" name="team_lead" checked="" value="1">yes
 						<input  type="radio" name="team_lead"  value="1">no
 					</div>
 				</div>

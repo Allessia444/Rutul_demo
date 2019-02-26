@@ -54,7 +54,11 @@
 										<div class="dropdown-menu dropdown-menu-right">
 											<a class="dropdown-item" href="{{ route('task_categories.show', $task_category->id) }}"><i class="fa fa-eye"></i> View</a>
 											<a class="dropdown-item" href="/admin/task_categories/{{$task_category->id}}/edit"><i class="fa fa-pencil"></i> Edit</a>
-											<a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+											<form action="{{route('task_categories.destroy',$task_category->id)}}" method="POST">
+												@method('DELETE')
+												@csrf
+												<button class="dropdown-item" type="submit"><i class="fa fa-trash"></i>Delete</button> 
+											</form>
 										</div>
 									</div>
 								</td>

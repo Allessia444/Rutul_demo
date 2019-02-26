@@ -23,13 +23,13 @@
 					<div class="pd-20 bg-white border-radius-4 box-shadow">
 						<div class="profile-photo">
 							<a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a>
-							<img src="{!!  asset('/photo/'.$user->user_profile->photo) !!}" alt="" class="avatar-photo">
+							<img src="{!!  $user->user_profile->photo_url() !!}" alt="" class="avatar-photo">
 							<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-body pd-5" >
 											<div class="img-container" id="previewDiv">
-												<img id="image" src="{!! asset('/photo/'.$user->user_profile->photo) !!}" alt="Picture">
+												<img id="image" src="{!!  $user->user_profile->photo_url() !!}" alt="Picture">
 												<!-- <div id="profile_photo"></div> -->
 											</div>
 										</div>

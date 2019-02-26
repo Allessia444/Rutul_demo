@@ -58,7 +58,6 @@ class BlogCategoriesController extends Controller
       return redirect()->route('blog_categories.index')->withError('Something went wrong, Please try after sometime.');
       }
     }
-
         //show blog category
     public function show($id)
     {
@@ -107,8 +106,6 @@ class BlogCategoriesController extends Controller
       {
           return redirect()->route('blog_categories.index')->withError('Something went wrong, Please try after sometime.');
       }
-      
-
     }
         //destroy blog category
     public function destroy($id)

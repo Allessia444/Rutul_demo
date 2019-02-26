@@ -38,10 +38,10 @@
 					<table class="data-table stripe hover nowrap">
 						<thead>
 							<tr>
-
 								<th>Department Id</th>
 								<th>Name</th>
 								<th class="datatable-nosort">Action</th>
+								<th>Team Lead</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -57,8 +57,15 @@
 										<div class="dropdown-menu dropdown-menu-right">
 											<a class="dropdown-item" href="{{ route('departments.show', $dept->id) }}"><i class="fa fa-eye"></i> View</a>
 											<a class="dropdown-item" href="/admin/departments/{{$dept->id}}/edit"><i class="fa fa-pencil"></i> Edit</a>
-											<a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+											<form action="{{route('departments.destroy',$dept->id)}}" method="POST">
+												@method('DELETE')
+												@csrf
+												<button class="dropdown-item" type="submit"><i class="fa fa-trash"></i>Delete</button>
+											</form>
 										</div>
+										<td>
+											<a class="dropdown-item" href="{{ route('departments.team_leads.create', $dept->id) }}"><i class="fa fa-pencil"></i>Team Lead</a>
+										</td>
 									</div>
 								</td>
 							</tr>
@@ -80,7 +87,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
-			 pageLength: 5,
+			pageLength: 5,
 			columnDefs: [{
 				targets: "datatable-nosort",
 				orderable: false,

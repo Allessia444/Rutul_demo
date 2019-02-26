@@ -13,7 +13,7 @@ class UserProfile extends Model
      protected $table='users_profile';
 
 	   protected $fillable = [
-        'photo','phone','address1', 'address2','city','state','country','zipcode','dob','gender','marital_status','pan_number','management_level','join_date','attach','google','facebook','website','skype','linkedin','twitter',
+        'photo','phone','address1', 'address2','city','state','country','zipcode','dob','gender','marital_status','pan_number','management_level','join_date','attach','google','facebook','website','skype','linkedin','twitter','uid',
     ];
 
 
@@ -43,12 +43,13 @@ class UserProfile extends Model
 	
 	public function photo_url($type='original') 
 	{
+		
 		if (!empty($this->photo))
 			return upload_url($this->photo,'photo',$type);
 		elseif (!empty($this->photo) && file_exists(tmp_path($this->photo)))
 			return tmp_url($this->$photo);
 		else
-			return asset('images/graduate.png');
+			return asset('images/img.png');
 	}
 
 

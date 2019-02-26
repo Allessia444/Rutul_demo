@@ -8,7 +8,7 @@ use Image;
 class Blog extends Model
 {
     protected $fillable = [
-        'blog_catrgory_id','user_id','name','description','photo','status',
+        'blog_category_id','user_id','name','description','photo','status',
     ];
 
     public function user()
@@ -31,7 +31,10 @@ class Blog extends Model
 			Image::make($source_path)->resize(200,303)->save($source_path);
 			upload_move($file,'blog','front');
 
-			Image::make($source_path)->resize(609,388.13)->save($source_path);
+			Image::make($source_path)->resize(150,150)->save($source_path);
+			upload_move($file,'blog','small');
+
+			Image::make($source_path)->resize(690,388.13)->save($source_path);
 			upload_move($file,'blog','large');
 			
 			@unlink($source_path);

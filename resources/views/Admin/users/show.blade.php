@@ -186,7 +186,7 @@
 											<i class="fa fa-ellipsis-h"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="{{ route('blogs.show', $blog->id) }}"><i class="fa fa-eye"></i> View</a>
+											<a class="dropdown-item" href="{{ route('blogs.show',['id' => $blog->id, 'from' => 'user']) }}"><i class="fa fa-eye"></i> View</a>
 											<!-- <a class="dropdown-item" href="/admin/blogs/{{$blog->id}}/edit"><i class="fa fa-pencil"></i> Edit</a>
 												<a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a> -->
 											</div>

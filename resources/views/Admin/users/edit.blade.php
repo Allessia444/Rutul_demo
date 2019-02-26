@@ -124,8 +124,8 @@
 				<div class="form-group row">
 					<label class="col-sm-12 col-md-2 col-form-label">Team Lead</label>
 					<div class="col-sm-12 col-md-10">
-						<input  type="radio" name="team_lead" {!! $user->team_lead == 0 ? 'checked' : '' !!} value="0">yes
-						<input  type="radio" name="team_lead" {!! $user->team_lead == 1 ? 'checked' : '' !!} value="1">no
+						<input  type="radio" name="team_lead" {!! $user->team_lead == 0 ? 'checked' : '' !!} value="0">no
+						<input  type="radio" name="team_lead" {!! $user->team_lead == 1 ? 'checked' : '' !!} value="1">yes
 					</div>
 				</div>
 				{!! Former::submit('btnuseredit')->class('btn btn-outline-success')->value('Update') !!}

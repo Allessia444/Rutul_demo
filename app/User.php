@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'fname','lname','email', 'password','mobile_number','designation_id','department_id','team_lead',
+        'fname','lname','email', 'password','mobile_number','designation_id','department_id','team_lead','status','role',
     ];
 
     /**
@@ -43,6 +43,11 @@ class User extends Authenticatable
     public function user_profile()
     {
         return $this->hasOne('App\UserProfile','uid');
+    }
+
+     public function team_lead()
+    {
+        return $this->hasMany('App\TeamLead');
     }
 
     public function project()

@@ -13,7 +13,7 @@
 				<li>
 					<a href="{{route('users.index')}}" class="dropdown-toggle no-arrow">
 						<span class="fa fa-user"></span><span class="mtext">User</span>
-						<span class="badge badge-pill badge-light ">{!! App\User::count() !!}</span>
+						<span class="badge badge-pill badge-light ">{!! App\User::where('role','=','user')->count() !!}</span>
 					</a>
 				</li>
 				<li>
@@ -70,6 +70,16 @@
 						<span class="badge badge-pill badge-light">{!! App\BlogCategory::count() !!}</span>
 					</a>
 				</li>
+				<li>
+					<a href="{{ route('color') }}" class="dropdown-toggle no-arrow">
+						<span class="fa fa-map-o"></span><span class="mtext">Color</span>
+					</a>
+				</li>
+				<li>
+					<a href="{{ route('background_color') }}" class="dropdown-toggle no-arrow">
+						<span class="fa fa-map-o"></span><span class="mtext">Background Color</span>
+					</a>
+				</li>
 			</ul>
 
 			@else
@@ -82,11 +92,13 @@
 				<li>
 					<a href="{!! route('blogs.user_blog') !!}" class="dropdown-toggle no-arrow">
 						<span class="fa fa-user"></span><span class="mtext">Blog</span>
+						<span class="badge badge-pill badge-light">{!! App\Blog::where('user_id',Auth::user()->id)->count() !!}</span>
 					</a>
 				</li>
 				<li>
 					<a href="{{route('tasks.index')}}" class="dropdown-toggle no-arrow">
 						<span class="fa fa-map-o"></span><span class="mtext">Task</span>
+						<span class="badge badge-pill badge-light">{!! App\Task::where('user_id',Auth::user()->id)->count() !!}</span>
 					</a>
 				</li>
 			</ul>

@@ -28,6 +28,18 @@
 								<a class="dropdown-item" href="#">View Assets</a>
 							</div>
 						</div>
+						<div id="container">
+							<a id="pickfiles" href="javascript:;" class="btn btn-primary"><span class="fa fa-cloud-upload">Import User Data</span></a> 
+						</div>
+						<form id="formdata">
+							<input type="hidden" name="file" id="file">
+						</form>
+						<div id="container-export">
+							<a id="pickfiles-export" href="{!! route('users.export') !!}" class="btn btn-primary"><span class="fa fa-cloud-download">Export User Data</span></a>
+						</div>
+						<form id="formdata-export">
+							<input type="hidden" name="file" id="file">
+						</form>
 					</div>
 				</div>
 			</div>
@@ -60,7 +72,11 @@
 										<div class="dropdown-menu dropdown-menu-right">
 											<a class="dropdown-item" href="{{ route('users.show', $user->id) }}"><i class="fa fa-eye"></i> View</a>
 											<a class="dropdown-item" href="/admin/users/{{$user->id}}/edit"><i class="fa fa-pencil"></i> Edit</a>
-											<a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+											<form action="{{route('users.destroy',$user->id)}}" method="POST">
+												@method('DELETE')
+												@csrf
+												<button class="dropdown-item" type="submit"><i class="fa fa-trash"></i>Delete</button> 
+											</form>
 										</div>
 									</div>
 								</td>
@@ -81,7 +97,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
-			 pageLength: 5,
+			pageLength: 5,
 			columnDefs: [{
 				targets: "datatable-nosort",
 				orderable: false,
@@ -93,5 +109,60 @@
 			},
 		});
 	});
+</script>
+<script type="text/javascript" src="{!! asset('/plupload-2.3.6/js/plupload.full.min.js') !!}"></script>
+<script type="text/javascript">
+	var uploader = new plupload.Uploader({
+		runtimes : 'html5,flash,silverlight,html4',
+		browse_button : 'pickfiles',
+		container: document.getElementById('container'),
+		url : "{!! asset('/plupload-2.3.6/examples/upload.php') !!}",
+		multi_selection:false, 
+		    filters : {
+			        max_file_size : '20mb',
+			        mime_types: [
+			            {title : "Image files", extensions : "jpg,gif,png,xlsx,xlsm"},
+			        ]
+		    },     
+		flash_swf_url : "{{ asset('plupload/Moxie.swf') }}",
+		silverlight_xap_url : "{{asset('plupload/Moxie.xap')}}",
+		init: {
+			PostInit: function() {
+				document.getElementById('file').innerHTML = '';
+			},
+			FilesAdded: function(up, files) {
+				uploader.start();
+				jQuery('#loading').show();
+			},
+			UploadComplete: function(up, files){
+				var tmp_url = '{!! asset('/tmp/') !!}';
+				plupload.each(files, function(file) {
+					$('#file').val(file.name);
+					console.log(file.name);
+				});
+
+				$.ajax({
+					type: "POST",
+					url: "{{ route('users.user-import') }}",
+					data: $('#formdata').serialize(),
+				})
+				.done(function(response) {
+				//$('.import_success').show();
+				// location.reload();
+			})
+				.fail(function(response) {
+					console.log(response);
+					// alert(response);
+				});
+			},
+			Error: function(up, err) {
+				alert(err.message);
+			}
+		}
+	});
+	uploader.init();
+
+
+
 </script>
 @endsection

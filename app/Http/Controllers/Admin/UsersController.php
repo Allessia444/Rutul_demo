@@ -13,10 +13,26 @@ use App\Blog;
 use Validator;
 use Former;
 use Auth;
+use App\Imports\UsersImport;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
-	
+
+	 public function export() 
+    {
+    	
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+	public function import(Request $request) 
+  	{
+        //return $request->get('file');
+        $file = public_path().'/tmp/'.$request->get('file');
+        Excel::import(new UsersImport,$file);
+        return redirect('/')->with('success', 'All good!');
+  	}
 	// Create form for user
 	public function index()
 	{

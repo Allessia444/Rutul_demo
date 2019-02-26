@@ -36,17 +36,20 @@
 					<table class="data-table stripe hover nowrap">
 						<thead>
 							<tr>
+								<th></th>
 								<th>Task Id</th>
 								<th>Name</th>
 								<th>Task Category</th>
 								<th>Start Date</th>
 								<th>End Date</th>
 								<th class="datatable-nosort">Action</th>
+								<th>Task Log</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach($tasks as $task)
 							<tr>
+								<td><input type="checkbox"  name="complete" class="complete" value="{!! $task->id !!}"></td>
 								<td>{{ $task->id }}</td>
 								<td>{{ $task->name }}</td>
 								<td>{{ $task->task_category->name }}</td>
@@ -68,6 +71,9 @@
 										</div>
 									</div>
 								</td>
+								<td>
+									<a class="dropdown-item" href="{!! route('tasks.task_logs.index', $task->id) !!}"><i class="fa fa-pencil"></i>Task Log</a>
+								</td>
 							</tr>
 							@endforeach
 						</tbody>
@@ -85,7 +91,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
-			 pageLength: 5,
+			pageLength: 5,
 			columnDefs: [{
 				targets: "datatable-nosort",
 				orderable: false,
@@ -97,6 +103,37 @@
 			},
 		});
 
+
+
 	});
+
+
+	$('.complete').click(function(){
+		var id = $(this).val();
+		alert(id);
+		$.ajax({
+			url: "{!! route('taskcomplete') !!}",
+			type: 'post',
+			data:{
+				'id': id, 
+				"_token": "{!! csrf_token() !!}",
+			},
+			success:function(response) {
+				location.reload();
+
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
+	});
+
+
 </script>
+
+
+
+
+
+
 @endsection

@@ -24,6 +24,7 @@ class CreateTasksTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('priority', ['none', 'low','medium','high']);
+            $table->tinyInteger('complete');
             $table->timestamps();
         });
     }

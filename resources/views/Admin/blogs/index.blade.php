@@ -7,7 +7,7 @@
 				<div class="row">
 					<div class="col-md-6 col-sm-12">
 						<div class="title">
-							<h4>Clients</h4>
+							<h4>Blogs</h4>
 						</div>
 						<nav aria-label="breadcrumb" role="navigation">
 							<ol class="breadcrumb">
@@ -22,16 +22,17 @@
 								<i class="fa fa-plus"></i>
 								Add Blog
 							</a>
-							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" href="#">Export List</a>
-								<a class="dropdown-item" href="#">Policies</a>
-								<a class="dropdown-item" href="#">View Assets</a>
-							</div>
 						</div>
+						<div id="container">
+							<a id="pickfiles" href="javascript:;" class="btn btn-primary"><span class="fa fa-cloud-upload">Import Blog Data</span></a> 
+						</div>
+						<form id="formdata">
+							<input type="hidden" name="file" id="file">
+						</form>
+						<a id="pickfiles" href="{!! route('blogs.export') !!}" class="btn btn-primary"><span class="fa fa-cloud-download">Export Blog Data</span></a> 
 					</div>
 				</div>
 			</div>
-
 			<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 				<div class="clearfix mb-20">
 				</div>
@@ -42,19 +43,16 @@
 								<th>Blog Id</th>
 								<th>Name</th>
 								<th>Blog Category</th>
-								<th>Description</th>
 								<th>User Name</th>
 								<th class="datatable-nosort">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-
 							@foreach($blogs as $blog)
 							<tr>
 								<td>{{ $blog->id }}</td>
 								<td>{{ $blog->name}}</td>
-								<td>{{ $blog->blog_category->name }}</td>
-								<td>{{ $blog->description }}</td>
+								<td>{{ $blog->blog_category_id ==  '' ? '' : $blog->blog_category->name }}</td>
 								<td>{{ $blog->user->fname }}</td>
 								<td>
 									<div class="dropdown">
@@ -62,32 +60,25 @@
 											<i class="fa fa-ellipsis-h"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="{{ route('blogs.show', $blog->id) }}"><i class="fa fa-eye"></i> View</a>
+											<a class="dropdown-item" href="{{ route('blogs.show',$blog->id) }}"><i class="fa fa-eye"></i> View</a>
 											<a class="dropdown-item" href="/admin/blogs/{{$blog->id}}/edit"><i class="fa fa-pencil"></i> Edit</a>
-
 											<form action="{{route('blogs.destroy',$blog->id)}}" method="POST">
 												@method('DELETE')
 												@csrf
 												<button class="dropdown-item" type="submit"><i class="fa fa-trash"></i>Delete</button> 
 											</form>
-											
 										</div>
 									</div>
 								</td>
-
 							</tr>
 							@endforeach
 						</tbody>
-
 					</table>
 				</div>
 			</div>
-
 		</div>
-
 	</div>
 </div>
-
 @endsection
 @section('script')
 <script>
@@ -96,7 +87,7 @@
 			scrollCollapse: true,
 			autoWidth: false,
 			responsive: true,
-			 pageLength: 5,
+			pageLength: 5,
 			columnDefs: [{
 				targets: "datatable-nosort",
 				orderable: false,
@@ -107,9 +98,64 @@
 				searchPlaceholder: "Search"
 			},
 		});
-
-
-
 	});
+
+
+</script>
+<script type="text/javascript" src="{!! asset('/plupload-2.3.6/js/plupload.full.min.js') !!}"></script>
+<script type="text/javascript">
+	var uploader = new plupload.Uploader({
+		runtimes : 'html5,flash,silverlight,html4',
+		browse_button : 'pickfiles',
+		container: document.getElementById('container'),
+		url : "{!! asset('/plupload-2.3.6/examples/upload.php') !!}",
+		multi_selection:false, 
+		    filters : {
+			        max_file_size : '20mb',
+			        mime_types: [
+			            {title : "Image files", extensions : "jpg,gif,png,xlsx,xlsm"},
+			        ]
+		    },     
+		flash_swf_url : "{{ asset('plupload/Moxie.swf') }}",
+		silverlight_xap_url : "{{asset('plupload/Moxie.xap')}}",
+		init: {
+			PostInit: function() {
+				document.getElementById('file').innerHTML = '';
+			},
+			FilesAdded: function(up, files) {
+				uploader.start();
+				jQuery('#loading').show();
+			},
+			UploadComplete: function(up, files){
+				var tmp_url = '{!! asset('/tmp/') !!}';
+				plupload.each(files, function(file) {
+					$('#file').val(file.name);
+					console.log(file.name);
+				});
+
+				$.ajax({
+					type: "POST",
+					url: "{{ route('blogs.import') }}",
+					data: $('#formdata').serialize(),
+				})
+				.done(function(response) {
+				//$('.import_success').show();
+				// location.reload();
+			})
+				.fail(function(response) {
+					console.log(response);
+					// alert(response);
+				});
+			},
+			Error: function(up, err) {
+				alert(err.message);
+			}
+		}
+	});
+	uploader.init();
+
+
+
+
 </script>
 @endsection

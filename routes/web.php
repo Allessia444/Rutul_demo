@@ -1,13 +1,10 @@
 <?php
 
-	Route::get('/', function () {
-		return view('welcome');
-	});
+	// Route::get('/', function () {
+	// 	return view('welcome');
+	// });
 
 Route::group(['middleware'=>['role'],'prefix'=>'admin','namespace'=>'Admin'], function(){ 
-
-	Route::get('/', 'HomeController@index')->name('home');
-
 
 
 	//insert update delete user
@@ -34,6 +31,11 @@ Route::group(['middleware'=>['role'],'prefix'=>'admin','namespace'=>'Admin'], fu
 	//inser update delete view task_category
 	Route::resource('tasks','TasksController');
 
+	Route::resource('tasks.task_logs','TaskLogsController');
+
+	//task complete
+	Route::post('/task_complete','TasksController@complete')->name('taskcomplete');
+
 	//insert update delete view project
 	Route::resource('projects','ProjectsController');
 
@@ -43,18 +45,39 @@ Route::group(['middleware'=>['role'],'prefix'=>'admin','namespace'=>'Admin'], fu
 	//insert update delete client
 	Route::resource('clients','ClientsController');
 
+	//department wise teamlead
+	Route::resource('departments.team_leads','TeamLeadController');
+
 	//insert update delete client
 	Route::resource('blogs','BlogsController');
 
-	Route::get('/users-blog','BlogsController@user_blog')->name('blogs.user_blog');
+	//get user blog
+	Route::get('/users-blogs','BlogsController@user_blog')->name('blogs.user_blog');
+
+	//import blogs
+	Route::post('/import','BlogsController@import')->name('blogs.import');
+
+	//imports users
+	Route::post('/user-import','UsersController@import')->name('users.user-import');
+
+	//exports users
+	Route::get('/export','UsersController@export')->name('users.export');
+
+	//exports blogs
+	Route::get('/blog-export','BlogsController@export')->name('blogs.export');
 
 	//insert update delete client
 	Route::resource('blog_categories','BlogCategoriesController');
 
 });
 
+	Route::get('/', 'HomeController@index')->name('home');
 
-	Route::get('/blog', 'DashboardController@blog')->name('blog');
+	Route::get('/color','HomeController@color')->name('color');
+
+	Route::get('/background_color','HomeController@background_color')->name('background_color');
+
+	Route::get('blogs', 'DashboardController@blog')->name('blog');
 
 	Route::get('/blog_detail/{blog}', 'DashboardController@blog_detail')->name('blog_detail');
 
