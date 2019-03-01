@@ -1,4 +1,5 @@
 @extends('Admin.layouts.index')
+@section('title','Projects')
 @section('content')
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll customscroll-10-p height-100-p xs-pd-20-10">
@@ -38,7 +39,7 @@
 							<tr>
 								<th>Project Id</th>
 								<th>Name</th>
-								<th>User Name</th>
+								
 								<th>Confirm Hour</th>
 								<th class="datatable-nosort">Action</th>
 							</tr>
@@ -47,7 +48,6 @@
 							@foreach($projects as $project)
 							<tr>
 								<td>{{ $project->id }}</td>
-								<td>{{ $project->user->fname }}</td>
 								<td>{{ $project->name}}</td>
 								<td>{{ $project->confirm_hours}}</td>
 								<td>

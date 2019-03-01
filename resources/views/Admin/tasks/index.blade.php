@@ -1,4 +1,5 @@
 @extends('Admin.layouts.index')
+@section('title','Tasks')
 @section('content')
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll customscroll-10-p height-100-p xs-pd-20-10">
@@ -18,7 +19,7 @@
 					</div>
 					<div class="col-md-6 col-sm-12 text-right">
 						<div class="dropdown">
-							<a class="btn btn-primary " href="{{ route('tasks.create')}}" role="button" >
+							<a class="btn btn-primary " href="{{ route('project.tasks.create',$project_id)}}" role="button" >
 								<i class="fa fa-plus"></i>
 								Add Task
 							</a>
@@ -61,9 +62,9 @@
 											<i class="fa fa-ellipsis-h"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="{{ route('tasks.show', $task->id) }}"><i class="fa fa-eye"></i> View</a>
-											<a class="dropdown-item" href="/admin/tasks/{{$task->id}}/edit"><i class="fa fa-pencil"></i> Edit</a>
-											<form action="{{route('tasks.destroy',$task->id)}}" method="POST">
+											<a class="dropdown-item" href="{{ route('project.tasks.show',[$project_id ,$task->id]) }}"><i class="fa fa-eye"></i> View</a>
+											<a class="dropdown-item" href="{!! route('project.tasks.edit',[$project_id ,$task->id]) !!}"><i class="fa fa-pencil"></i> Edit</a>
+											<form action="{{route('project.tasks.destroy',[$project_id ,$task->id])}}" method="POST">
 												@method('DELETE')
 												@csrf
 												<button class="dropdown-item" type="submit"><i class="fa fa-trash"></i>Delete</button> 
@@ -72,7 +73,7 @@
 									</div>
 								</td>
 								<td>
-									<a class="dropdown-item" href="{!! route('tasks.task_logs.index', $task->id) !!}"><i class="fa fa-pencil"></i>Task Log</a>
+									<a class="dropdown-item" href="{!! route('project.tasks.task_logs.index',[$project_id,$task->id]) !!}"><i class="fa fa-pencil"></i>Task Log</a>
 								</td>
 							</tr>
 							@endforeach

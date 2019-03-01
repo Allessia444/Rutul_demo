@@ -5,9 +5,11 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Project;
+use App\UserProject;
 use App\User;
 use Validator;
 use Former;
+use Auth;
 
 class ProjectsController extends Controller
 {
@@ -22,7 +24,7 @@ class ProjectsController extends Controller
   //Show the form for creating a new project.
   public function create()
   {
-    $user = User::all()->pluck('fname','id');
+    $user = User::where('role','=','user')->pluck('fname','id');
     return view('admin.projects.create',compact('user'));
 
   }
@@ -50,21 +52,32 @@ class ProjectsController extends Controller
       return redirect()->back()->withErrors($validator)->withInput();
     }
     //If no error than go inside otherwise go to the catch section
-    try
-    {
+    // try
+    // {
 
-      $project = new Project();
-      $project->name=$request->get('name');
-      $project->users_id=$request->get('users_id');
-      $project->confirm_hours=$request->get('confirm_hours');
-      $project->save();
-      return redirect()->route('projects.index');
+        $project = new Project();
+        $project->name=$request->get('name');
+        $project->user_id=Auth::user()->id;
+        $project->confirm_hours=$request->get('confirm_hours');
+        $project->save();
+        // dd($request->get('user_id'));
 
-    }
-    catch(\Exception $e)
-    {
-      return redirect()->route('projects.index')->withError('Something went wrong, Please try after sometime.');
-    }
+      foreach ($request->get('user_id') as $key => $user) 
+      {
+      
+        $user_project = new UserProject(); 
+        $user_project->project_id=$project->id;
+        $user_project->user_id=$request->get('user_id')[$key];
+        $user_project->save();
+       
+      }
+       return redirect()->route('projects.index');
+
+    // }
+    // catch(\Exception $e)
+    // {
+    //   return redirect()->route('projects.index')->withError('Something went wrong, Please try after sometime.');
+    // }
   }
 
   //Display the specified project.
@@ -123,5 +136,11 @@ class ProjectsController extends Controller
     $project = Project::find($id);
     $project->delete();
     return redirect()->route('projects.index');
+  }
+
+  public function user_projects()
+  {
+    $user_projects = UserProject::where('user_id','=',Auth::user()->id)->get();
+    return view('admin.projects.user_projects',compact('user_projects'));
   }
 }

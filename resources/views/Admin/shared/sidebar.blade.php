@@ -80,6 +80,12 @@
 						<span class="fa fa-map-o"></span><span class="mtext">Background Color</span>
 					</a>
 				</li>
+				
+				<li>
+					<a href="{{ route('task-category') }}" class="dropdown-toggle no-arrow">
+						<span class="fa fa-map-o"></span><span class="mtext">Task CAtegory</span>
+					</a>
+				</li>
 			</ul>
 
 			@else
@@ -95,10 +101,10 @@
 						<span class="badge badge-pill badge-light">{!! App\Blog::where('user_id',Auth::user()->id)->count() !!}</span>
 					</a>
 				</li>
+				
 				<li>
-					<a href="{{route('tasks.index')}}" class="dropdown-toggle no-arrow">
-						<span class="fa fa-map-o"></span><span class="mtext">Task</span>
-						<span class="badge badge-pill badge-light">{!! App\Task::where('user_id',Auth::user()->id)->count() !!}</span>
+					<a href="{{route('user_projects')}}" class="dropdown-toggle no-arrow">
+						<span class="fa fa-sitemap"></span><span class="mtext">Project</span>
 					</a>
 				</li>
 			</ul>

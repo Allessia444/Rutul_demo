@@ -16,8 +16,8 @@ class CreateBlogCategoriesTable extends Migration
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('slug');
-            $table->integer('parent_id')->unsigned();
+            $table->string('slug')->nullable();
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('blog_categories')->onDelete('cascade');
             $table->timestamps();
         });

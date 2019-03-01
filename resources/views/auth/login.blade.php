@@ -48,6 +48,7 @@
                                         {{ __('Remember Me') }}
                                     </label>
                                 </div>
+                                 <a class="btn btn-github" href="{{ route('github') }}">Git hub</a>
                             </div>
                         </div>
 

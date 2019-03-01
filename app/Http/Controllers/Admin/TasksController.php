@@ -17,11 +17,11 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($project_id)
     {
-
-       $tasks = Task::where('user_id','=',Auth::user()->id)->where('complete','=',0)->get();
-       return view('admin.tasks.index',compact('tasks'));
+       $tasks = Task::where('user_id','=',Auth::user()->id)->where('complete','=',0)->where('project_id','=',$project_id)->get();
+       // dd($tasks);
+       return view('admin.tasks.index',compact('tasks','project_id'));
     }
 
     /**
@@ -29,11 +29,11 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($project_id)
     {
  
        $task_category = TaskCategory::all()->pluck('name','id');
-       return view('admin.tasks.create',compact('user','task_category'));
+       return view('admin.tasks.create',compact('user','task_category','project_id'));
     }
 
     //Task completed
@@ -53,7 +53,7 @@ class TasksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$project_id)
     {
         //Rules for validation
         $rules=[
@@ -66,7 +66,7 @@ class TasksController extends Controller
         // Messages for validation
       $messages=[
           'name.required' => 'Please enter name.',
-          'notes.required' =>'Please enter hours',
+          'notes.required' =>'Please enter notes',
           'start_date.required' =>'Please enter start date',
           'end_date.required' =>'Please enter end date',
       ];
@@ -81,6 +81,7 @@ class TasksController extends Controller
        //  If no error than go inside otherwise go to the catch section
       // try
       // {
+        // dd($project_id);
           $task = new Task();
           $task->name=$request->get('name');
           $task->notes=$request->get('notes');
@@ -88,8 +89,9 @@ class TasksController extends Controller
           $task->task_category_id=$request->get('task_category_id');
           $task->start_date=$request->get('start_date');
           $task->end_date=$request->get('end_date');
+          $task->project_id=$project_id;
           $task->save();
-          return redirect()->route('tasks.index');
+          return redirect()->route('project.tasks.index',$project_id);
 
       // }
       // catch(\Exception $e)
@@ -104,10 +106,10 @@ class TasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($project_id,$id)
     {
         $task = Task::find($id);
-        return view('admin.tasks.show',compact('task'));
+        return view('admin.tasks.show',compact('task','project_id'));
     }
 
     /**
@@ -116,12 +118,12 @@ class TasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($project_id,$id)
     {
         $task = Task::find($id);
         $task_category = TaskCategory::all()->pluck('name','id');
         Former::populate($task) ;
-        return view('admin.tasks.edit',compact('task','task_category'));
+        return view('admin.tasks.edit',compact('task','task_category','project_id'));
     }
 
     /**
@@ -131,7 +133,7 @@ class TasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request,$project_id,$id)
     {
           //Rules for validation
         $rules=[
@@ -161,11 +163,11 @@ class TasksController extends Controller
       {
           $task = Task::find($id);
           $task->update($request->all());
-          return redirect()->route('tasks.index');
+          return redirect()->route('project.tasks.index',$project_id);
       }
       catch(\Exception $e)
       {
-          return redirect()->route('tasks.index')->withError('Something went wrong, Please try after sometime.');
+          return redirect()->route('project.tasks.index',$project_id)->withError('Something went wrong, Please try after sometime.');
       }
   }
 
@@ -175,10 +177,12 @@ class TasksController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($project_id,$id)
     {
         $task = Task::find($id);
         $task->delete();
-        return redirect()->route('tasks.index');
+        return redirect()->route('project.tasks.index',$project_id);
     }
+
+  
 }

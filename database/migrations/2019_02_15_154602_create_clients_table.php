@@ -15,18 +15,18 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
-               $table->integer('industries_id')->unsigned();
+            $table->integer('industries_id')->unsigned();
             $table->foreign('industries_id')->references('id')->on('industries')->onDelete('cascade');
             $table->text('name');
-             $table->text('logo');
+            $table->text('logo')->nullable();
 
-              $table->string('website')->nullable();
-               $table->text('email');
-                $table->text('phone');
-                 $table->text('fax');
-                  $table->text('address1');
-                   $table->text('address2');
-              $table->string('city')->nullable();
+            $table->string('website')->nullable();
+            $table->text('email');
+            $table->text('phone');
+            $table->text('fax')->nullable();
+            $table->text('address1');
+            $table->text('address2');
+            $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->Integer('zipcode')->nullable();

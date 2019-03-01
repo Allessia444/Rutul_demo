@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use DB;
+use App\Task;
+use App\TaskCategory;
 
 class HomeController extends Controller
 {
@@ -53,6 +55,25 @@ class HomeController extends Controller
      public function background_color()
     {
         return view('Admin.background_color');
+    }
+
+     public function task_category()
+    {
+        $task_categories = TaskCategory::get()->pluck('name','id');
+        return view('Admin.task_details',compact('task_categories'));
+    }
+
+     public function get_task($task_category_id)
+    {
+        $tasks = Task::where('task_category_id','=',$task_category_id)->pluck('name','id');
+       // dd($task);
+        return view('Admin.render_task',compact('tasks'));
+    }
+
+     public function get_task_details($task_id)
+    {
+        $tasks_detail = Task::find($task_id);
+        return view('Admin.render_task_detail',compact('tasks_detail'));
     }
   
 }

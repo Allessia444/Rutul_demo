@@ -1,4 +1,5 @@
 @extends('Admin.layouts.index')
+@section('title','Edit Project')
 @section('content')
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll-10-p height-100-p xs-pd-20-10">
@@ -42,7 +43,7 @@
 
 				@csrf
 
-				{!!	Former::select('users_id')->options($user) !!}
+				{!!	Former::multiselect('user_id')->options($user)->class('selectpicker')->placeholder('Select one option...') !!}
 
 				{!! Former::input('name')->class('form-control')->label('Project name') !!}
 

@@ -1,4 +1,5 @@
 @extends('Admin.layouts.index')
+@section('title','Edit TAsk')
 @section('content')
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll-10-p height-100-p xs-pd-20-10">
@@ -12,14 +13,14 @@
 						<nav aria-label="breadcrumb" role="navigation">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="{{Route('home')}}">Home</a></li>
-								<li class="breadcrumb-item"><a href="{{Route('tasks.index')}}">Task</a></li>
+								<li class="breadcrumb-item"><a href="{{Route('project.tasks.index',$project_id)}}">Task</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Update Task</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="col-md-6 col-sm-12 text-right">
 						<div class="dropdown">
-							<a class="btn btn-primary " href="{{ route('tasks.index')}}" role="button" >
+							<a class="btn btn-primary " href="{{ route('project.tasks.index',$project_id)}}" role="button" >
 								Back
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
@@ -38,7 +39,7 @@
 						<p class="mb-30 font-14"></p>
 					</div>
 				</div>
-				{!! Former::open()->method('PATCH')->action(route('tasks.update',$task->id)) !!}
+				{!! Former::open()->method('PATCH')->action(route('project.tasks.update',[$project_id,$task->id])) !!}
 
 				@csrf
 

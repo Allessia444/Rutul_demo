@@ -19,7 +19,6 @@ class BlogsController extends Controller
 
  public function export() 
  {
-
   return Excel::download(new BlogsExport, 'blogs.xlsx');
 }
 
@@ -150,7 +149,6 @@ public function update(Request $request,$id)
     $blog->photo=$request->get('photo');
     $blog->status=$request->get('status');
     $blog->save();
-    $blog->save();
     if(Auth::user()->role=="admin")
     {
       return redirect()->route('blogs.index');
@@ -188,5 +186,28 @@ public function destroy($id)
  }
 
 }
+
+public function blog_edit($id)
+{
+ $blog = Blog::find($id);
+ $blog_category = BlogCategory::all()->pluck('name','id');
+ Former::populate($blog);
+ return view('admin.blogs.edit_blog',compact('blog','blog_category'));
+}
+
+public function blog_update(Request $request)
+{
+    try{
+     $blog = Blog::find($request->blog_id);
+     $blog->update($request->all());
+     $blog->save();
+     return response()->json(['blog'=>$request->all()], 200); 
+   }
+   catch(\Exception $e)
+   {
+    return response()->json('Something went wrong', 422); 
+  } 
+
+ }
 
 }

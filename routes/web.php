@@ -25,13 +25,14 @@ Route::group(['middleware'=>['role'],'prefix'=>'admin','namespace'=>'Admin'], fu
 	//insert update delete view industry
 	Route::resource('industries','IndustriesController');
 
-	//inser update delete view task_category
+	//insert update delete view task_category
 	Route::resource('task_categories','TaskCategoriesController');
 
-	//inser update delete view task_category
-	Route::resource('tasks','TasksController');
+	//insert update delete view task_category
+	Route::resource('project.tasks','TasksController');
 
-	Route::resource('tasks.task_logs','TaskLogsController');
+	//insert update delete ttask log
+	Route::resource('project.tasks.task_logs','TaskLogsController');
 
 	//task complete
 	Route::post('/task_complete','TasksController@complete')->name('taskcomplete');
@@ -39,6 +40,7 @@ Route::group(['middleware'=>['role'],'prefix'=>'admin','namespace'=>'Admin'], fu
 	//insert update delete view project
 	Route::resource('projects','ProjectsController');
 
+	Route::get('/user-projects','ProjectsController@user_projects')->name('user_projects');
 	//insert update delete project_category
 	Route::resource('project_categories','ProjectCategoriesController');
 
@@ -50,6 +52,12 @@ Route::group(['middleware'=>['role'],'prefix'=>'admin','namespace'=>'Admin'], fu
 
 	//insert update delete client
 	Route::resource('blogs','BlogsController');
+
+	//blog edit model
+	Route::get('/blog_edit/{id}','BlogsController@blog_edit')->name('blog-edit');
+
+	//blog update model
+	Route::post('/blog-update','BlogsController@blog_update')->name('blog-update');
 
 	//get user blog
 	Route::get('/users-blogs','BlogsController@user_blog')->name('blogs.user_blog');
@@ -69,18 +77,39 @@ Route::group(['middleware'=>['role'],'prefix'=>'admin','namespace'=>'Admin'], fu
 	//insert update delete client
 	Route::resource('blog_categories','BlogCategoriesController');
 
+	//edit update site setting
+	Route::get('/site-setting','SiteSettingsController@edit')->name('site_setting.edit');
+
+	Route::post('/site-setting','SiteSettingsController@update')->name('site_setting.update');
+
 });
 
-	Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
-	Route::get('/color','HomeController@color')->name('color');
+//color
+Route::get('/color','HomeController@color')->name('color');
 
-	Route::get('/background_color','HomeController@background_color')->name('background_color');
+Route::get('/task-category','HomeController@task_category')->name('task-category');
 
-	Route::get('blogs', 'DashboardController@blog')->name('blog');
+Route::get('/task-detail','HomeController@get_task_details')->name('task-detail');
 
-	Route::get('/blog_detail/{blog}', 'DashboardController@blog_detail')->name('blog_detail');
+Route::get('/get-task/{id}', 'HomeController@get_task')->name('get-task');
 
-	Auth::routes();
+//task details by task_id
+Route::get('/get-task-details/{id}', 'HomeController@get_task_details')->name('get-task-details');
+
+//background color select in dropdowm
+Route::get('/background_color','HomeController@background_color')->name('background_color');
+
+//list blog
+Route::get('blogs', 'DashboardController@blog')->name('blog');
+
+//blog details
+Route::get('/blog_detail/{blog}', 'DashboardController@blog_detail')->name('blog_detail');
+
+Route::get('/login/github', 'Auth\LoginController@redirectToProvider')->name('github');
+Route::get('/login/github/callback', 'Auth\LoginController@handleProviderCallback');
+
+Auth::routes();
 
 

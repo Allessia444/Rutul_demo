@@ -17,8 +17,8 @@ class CreateTeamLeadsTable extends Migration
             $table->increments('id');
             $table->integer('team_lead_id')->unsigned();
             $table->foreign('team_lead_id')->references('id')->on('users')->onDelete('cascade');
-             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+             $table->integer('member_id')->unsigned();
+            $table->foreign('member_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('department_id')->unsigned();
             $table->foreign('department_id')->references('id')->on('department')->onDelete('cascade');
             $table->timestamps();

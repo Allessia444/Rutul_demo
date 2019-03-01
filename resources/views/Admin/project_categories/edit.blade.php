@@ -1,4 +1,5 @@
 @extends('Admin.layouts.index')
+@section('title','Edit Project Category')
 @section('content')
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll-10-p height-100-p xs-pd-20-10">

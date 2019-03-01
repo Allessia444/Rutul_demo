@@ -1,7 +1,6 @@
 @extends('Admin.layouts.index')
+@section('title','Edit Blog')
 @section('content')
-
-
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll-10-p height-100-p xs-pd-20-10">
 		<div class="min-height-200px">
@@ -79,8 +78,8 @@
 				<div class="form-group row">
 					<label class="col-sm-12 col-md-2 col-form-label">Status</label>
 					<div class="col-sm-12 col-md-10">
-						<input  type="radio" name="status" checked value="0">InActive
-						<input  type="radio" name="status" value="1">Active
+						<input  type="radio" name="status" {!! $blog->status ? '' : 'checked' !!}  value="0">InActive
+						<input  type="radio" name="status" {!! $blog->status ? 'checked' : '' !!} value="1">Active
 					</div>
 				</div>
 				

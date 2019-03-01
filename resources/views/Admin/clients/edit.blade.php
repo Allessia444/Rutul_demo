@@ -1,7 +1,6 @@
 @extends('Admin.layouts.index')
+@section('title','Edit Client')
 @section('content')
-
-
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll-10-p height-100-p xs-pd-20-10">
 		<div class="min-height-200px">

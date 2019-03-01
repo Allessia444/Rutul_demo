@@ -1,4 +1,5 @@
 @extends('Admin.layouts.index')
+@section('title','Edit Task Log')
 @section('content')
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll-10-p height-100-p xs-pd-20-10">
@@ -12,14 +13,14 @@
 						<nav aria-label="breadcrumb" role="navigation">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="{{Route('home')}}">Home</a></li>
-								<li class="breadcrumb-item"><a href="{{Route('tasks.index')}}">Task</a></li>
+								<li class="breadcrumb-item"><a href="{{Route('project.tasks.index',$project_id)}}">Task</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Update Task</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="col-md-6 col-sm-12 text-right">
 						<div class="dropdown">
-							<a class="btn btn-primary " href="{{ route('tasks.index')}}" role="button" >
+							<a class="btn btn-primary " href="{{ route('project.tasks.index',$project_id)}}" role="button" >
 								Back
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
@@ -38,7 +39,7 @@
 						<p class="mb-30 font-14"></p>
 					</div>
 				</div>
-				{!! Former::open()->method('PATCH')->action( route('tasks.task_logs.update',[$task_id,$task_log->id]) ) !!}
+				{!! Former::open()->method('PATCH')->action( route('project.tasks.task_logs.update',[$project_id,$task_id,$task_log->id]) ) !!}
 
 				@csrf
 
@@ -53,8 +54,8 @@
 				<div class="form-group row">
 					<label class="col-sm-12 col-md-2 col-form-label">Billable</label>
 					<div class="col-sm-12 col-md-10">
-						<input  type="radio" name="billable" {!! $task_log->billable == 0 ? 'checked' : '' !!}  value="0">false
-						<input  type="radio" name="billable"  {!! $task_log->billable == 1 ? 'checked' : '' !!} value="1">true
+						<input  type="radio" name="billable" {!! $task_log->billable == 0 ? 'checked' : '' !!}  value="0">Non Billable
+						<input  type="radio" name="billable"  {!! $task_log->billable == 1 ? 'checked' : '' !!} value="1">Billable
 					</div>
 				</div>
 

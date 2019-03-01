@@ -1,4 +1,5 @@
 @extends('Admin.layouts.index')
+@section('title','Show Task Log')
 @section('content')
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll customscroll-10-p height-100-p xs-pd-20-10">
@@ -12,14 +13,14 @@
 						<nav aria-label="breadcrumb" role="navigation">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="{{Route('home')}}">Home</a></li>
-								<li class="breadcrumb-item"><a href="{{ route('tasks.task_logs.index',$task_id)}}">Task Log</a></li>
+								<li class="breadcrumb-item"><a href="{{ route('project.tasks.task_logs.index',[$project_id,$task_id])}}">Task Log</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Show Task Log</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="col-md-6 col-sm-12 text-right">
 						<div class="dropdown">
-							<a class="btn btn-primary " href="{{ route('tasks.task_logs.index',$task_id)}}" role="button" >
+							<a class="btn btn-primary " href="{{ route('project.tasks.task_logs.index',[$project_id,$task_id])}}" role="button" >
 								Back
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">

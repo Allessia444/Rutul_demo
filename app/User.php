@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Task');
     }
 
+    public function user_project()
+    {
+        return $this->hasMany('App\UserProject');
+    }
+
     public function designation()
     {
         return $this->belongsTo('App\Designation');

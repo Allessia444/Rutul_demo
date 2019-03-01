@@ -15,13 +15,13 @@ class CreateProjectCategoriesTable extends Migration
     {
         Schema::create('project_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('project_categories')->onDelete('cascade');
             $table->text('name');
             $table->text('slug');
-            $table->text('lft');
-            $table->text('rgt');
-            $table->text('depth');
+            $table->text('lft')->nullable();
+            $table->text('rgt')->nullable();
+            $table->text('depth')->nullable();
             $table->timestamps();
         });
     }

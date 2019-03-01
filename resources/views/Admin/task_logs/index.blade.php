@@ -1,4 +1,5 @@
 @extends('Admin.layouts.index')
+@section('title','Task Logs')
 @section('content')
 <div class="main-container">
 	<div class="pd-ltr-20 customscroll customscroll-10-p height-100-p xs-pd-20-10">
@@ -19,9 +20,9 @@
 					</div>
 					<div class="col-md-6 col-sm-12 text-right">
 						<div class="dropdown">
-							<a class="btn btn-primary " href="{{ route('tasks.task_logs.create',$task_id)}}" role="button" >
+							<a class="btn btn-primary " href="{{ route('project.tasks.task_logs.create',[$project_id,$task_id])}}" role="button" >
 								<i class="fa fa-plus"></i>
-								Add Task
+								Add Task Log
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								<a class="dropdown-item" href="#">Export List</a>
@@ -60,9 +61,9 @@
 											<i class="fa fa-ellipsis-h"></i>
 										</a>
 										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="{!! route('tasks.task_logs.show',[$task_id,$task_log->id]) !!}"><i class="fa fa-eye"></i> View</a>
-											<a class="dropdown-item" href="{!! route('tasks.task_logs.edit',[$task_id,$task_log->id]) !!}"><i class="fa fa-pencil"></i> Edit</a>
-											<form action="{!! route('tasks.task_logs.destroy',[$task_id,$task_log->id]) !!}" method="POST">
+											<a class="dropdown-item" href="{!! route('project.tasks.task_logs.show',[$project_id,$task_id,$task_log->id]) !!}"><i class="fa fa-eye"></i> View</a>
+											<a class="dropdown-item" href="{!! route('project.tasks.task_logs.edit',[$project_id,$task_id,$task_log->id]) !!}"><i class="fa fa-pencil"></i> Edit</a>
+											<form action="{!! route('project.tasks.task_logs.destroy',[$project_id,$task_id,$task_log->id]) !!}" method="POST">
 												@method('DELETE')
 												@csrf
 												<button class="dropdown-item" type="submit"><i class="fa fa-trash"></i>Delete</button> 
